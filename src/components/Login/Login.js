@@ -86,6 +86,13 @@ function Login() {
         <button onClick={googleSignIn}>Sign In</button>
       }
       <br/>
+      {
+        user.isSignedIn && <div>
+          <p>Welcome, {user.name}!</p>
+          <p>Your email: {user.email}</p>
+          <img src={user.photo} alt=""/>
+        </div>
+      }
       
       <h1>Our own Authentication</h1>
       <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""/>

@@ -1,6 +1,5 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
 import firebaseConfig from './firebase.config';
 
 export const initializeLoginFramework = () => {
@@ -21,6 +20,7 @@ export const handleGoogleSignIn = () => {
         photo: photoURL,
         success: true
       };
+      setUserToken();
       return signedInUser;
     })
     .catch(err => {
@@ -28,6 +28,17 @@ export const handleGoogleSignIn = () => {
       console.log(err.message);
     })
   }
+
+  const setUserToken = () =>{
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+      sessionStorage.setItem('token', idToken);
+      // Send token to your backend via HTTPS
+      // ...
+    }).catch(function(error) {
+      // Handle error
+    });
+  }
+
 
   export const handleSignOut = () => {
     return firebase.auth().signOut()
