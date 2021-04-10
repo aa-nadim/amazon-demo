@@ -36,7 +36,7 @@ const Shipment = () => {
         .then(data => {
           if (data) {
             processOrder();
-            // alert('your order placed successfully');
+            alert('your order placed successfully');
           }
         })
     }

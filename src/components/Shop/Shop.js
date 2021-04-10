@@ -9,12 +9,14 @@ import { Link } from 'react-router-dom';
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+    const [search, setSearch] = useState('');
+    document.title = "Shop More"
 
     useEffect(()=>{
-        fetch('https://evening-shelf-32297.herokuapp.com/products')
+        fetch('https://evening-shelf-32297.herokuapp.com/products?search='+search)
         .then(res => res.json())
         .then(data => setProducts(data))
-    }, [])
+    }, [search])
     
     useEffect(()=>{
         const savedCart = getDatabaseCart();
@@ -29,6 +31,10 @@ const Shop = () => {
         .then(res => res.json())
         .then(data => setCart(data))
     }, [])
+
+    const handleSearch = event =>{
+        setSearch(event.target.value);
+    }
 
     const handleAddProduct = (product) =>{
         const toBeAddedKey = product.key;
@@ -52,6 +58,7 @@ const Shop = () => {
     return (
         <div className="twin-container">
             <div className="product-container">
+            <input type="text" onBlur={handleSearch} placeholder="search product"/>
                 {
                     products.map(pd => <Product 
                         key={pd.key}
